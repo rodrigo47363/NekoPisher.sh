@@ -82,8 +82,14 @@ function mostrar_menu() {
 # Función para actualizar el script desde GitHub
 function update_script() {
     echo -e "${GREEN}Actualizando NekoPisher.sh desde GitHub...${NC}"
-    wget -q "$REPO_URL" -O "$LOCAL_PATH"
-    echo -e "${GREEN}Actualización completada.${NC}"
+    if wget -q -O /tmp/NekoPisher.sh "$REPO_URL"; then
+        sudo cp /tmp/NekoPisher.sh "$LOCAL_PATH"
+        sudo chmod +x "$LOCAL_PATH"
+        echo -e "${GREEN}Actualización completada.${NC}"
+    else
+        echo -e "${RED}Fallo al descargar el script de actualización.${NC}"
+    fi
+    rm -f /tmp/NekoPisher.sh
 }
 
 # Función para configurar la campaña de phishing con páginas falsas
